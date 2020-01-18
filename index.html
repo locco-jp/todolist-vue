@@ -98,6 +98,8 @@
             this.saveToLocalStorage();
           },
           toEditMode(item, id) {
+            //- リセット
+            this.items.forEach( item => item.editing = false );
             item.editing = !item.editing;
             setTimeout(() => {
               this.$refs["input"+id][0].focus();
