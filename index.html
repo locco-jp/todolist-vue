@@ -71,6 +71,7 @@
         },
         methods: {
           addItem() {
+            if (this.new_todo === "") return;
             var item = {
               text: this.new_todo,
               checked: false,
