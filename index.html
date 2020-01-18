@@ -46,12 +46,13 @@
           <div class="bold letter-spacing-2">{{ title }}</div>
           <div class="mt8 mb32 h2 rounded-1 w64 bg-black"></div>
           <form class="f w-full mb16" @submit.prevent="addItem">
-            <input class="input w-full mr4 bg-white" v-model="new_todo"></input>
+            <input class="input w-full mr4 bg-white" v-model="new_todo" autofocus></input>
             <button class="button black" type="submit">ADD</button>
           </form>
-          <div v-for="item in items" class="todo w-full text-left">
+          <div v-for="(item, id) in items" class="todo w-full text-left">
             <input type="checkbox" v-model="item.checked" @change="saveToLocalStorage"/>
-            <div>{{ item.text }}</div>
+            <div v-show="!item.editing" @click="toEditMode(item, id)">{{ item.text }}</div>
+            <input v-show="item.editing" :ref="'input' + id" type="text" v-model="item.text" @change="changeItem(item)"/>
           </div>
           <div class="mt10 text-left w-full">
             <button class="button text-white border-none bg-orange" @click="archiveItems">ARCHIVE</button>
@@ -73,6 +74,7 @@
             var item = {
               text: this.new_todo,
               checked: false,
+              editing: false,
             };
             this.items.push(item);
             this.saveToLocalStorage();
@@ -89,6 +91,16 @@
           archiveItems() {
             this.items = this.items.filter(item => !item.checked);
             this.saveToLocalStorage();
+          },
+          changeItem(item) {
+            item.editing = !item.editing;
+            this.saveToLocalStorage();
+          },
+          toEditMode(item, id) {
+            item.editing = !item.editing;
+            setTimeout(() => {
+              this.$refs["input"+id][0].focus();
+            }, 16);
           },
         },
         mounted() {
