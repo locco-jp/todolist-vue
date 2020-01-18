@@ -45,11 +45,14 @@
         <div class="min-container f flex-column fm p32 relative">
           <div class="bold letter-spacing-2">{{ title }}</div>
           <div class="mt8 mb32 h2 rounded-1 w64 bg-black"></div>
-          <form class="f w-full mb16">
-            <input class="input w-full mr4 bg-white"></input>
+          <form class="f w-full mb16" @submit.prevent="addItem">
+            <input class="input w-full mr4 bg-white" v-model="new_todo"></input>
             <button class="button black" type="submit">ADD</button>
           </form>
-          <div class="w-full text-left"></div>
+          <div v-for="item in items" class="todo w-full text-left">
+            <input type="checkbox" v-model="item.checked" @change="saveToLocalStorage"/>
+            <div>{{ item.text }}</div>
+          </div>
           <div class="mt10 text-left w-full">
             <button class="button text-white border-none bg-orange">ARCHIVE</button>
           </div>
@@ -62,6 +65,30 @@
         el: '#app',
         data: {
           title: "TODO in JS",
+          items: [],
+          new_todo: "",
+        },
+        methods: {
+          addItem() {
+            var item = {
+              text: this.new_todo,
+              checked: false,
+            };
+            this.items.push(item);
+            this.saveToLocalStorage();
+            this.new_todo = "";
+          },
+          saveToLocalStorage() {
+            localStorage.setItem('vue-todo', JSON.stringify(this.items));
+            console.log('saveItem');
+          },
+          getFromLocalStorage() {
+            this.items = localStorage.getItem('vue-todo') ? JSON.parse(localStorage.getItem('vue-todo')) : [];
+            console.log('getItem', this.items);
+          },
+        },
+        mounted() {
+          this.getFromLocalStorage();
         },
       });
     </script>
