@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>vue-todo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/meltline@0.1.10/meltline.css">
+    <style type="text/css">
+      .container {
+        width: 80%;
+        max-width: 960px;
+        margin: 0 auto;
+      }
+      .min-container {
+        width: 80%;
+        max-width: 480px;
+        margin: 0 auto;
+        background-color: rgba(0, 0, 0, 0.04);
+      }
+      .avenir {
+        font-family: Avenir;
+      }
+      .todo {
+        display: flex;
+        align-items: center;
+        height: 32px;
+      }
+      .todo input{
+        margin-right: 16px;
+      }
+      .todo input[type='text']{
+        display: block;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 6px 8px;
+        border-radius: 3px;
+        outline: none;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body class="h100vh avenir">
+    <div id="app" class="s-full bg-black f fh">
+      <div class="container bg-white p64 f fh">
+        <div class="min-container f flex-column fm p32 relative">
+          <div class="bold letter-spacing-2">{{ title }}</div>
+          <div class="mt8 mb32 h2 rounded-1 w64 bg-black"></div>
+          <form class="f w-full mb16">
+            <input class="input w-full mr4 bg-white"></input>
+            <button class="button black" type="submit">ADD</button>
+          </form>
+          <div class="w-full text-left"></div>
+          <div class="mt10 text-left w-full">
+            <button class="button text-white border-none bg-orange">ARCHIVE</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          title: "TODO in JS",
+        },
+      });
+    </script>
+
+</body>
+</html>
