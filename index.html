@@ -54,7 +54,7 @@
             <div>{{ item.text }}</div>
           </div>
           <div class="mt10 text-left w-full">
-            <button class="button text-white border-none bg-orange">ARCHIVE</button>
+            <button class="button text-white border-none bg-orange" @click="archiveItems">ARCHIVE</button>
           </div>
         </div>
       </div>
@@ -85,6 +85,10 @@
           getFromLocalStorage() {
             this.items = localStorage.getItem('vue-todo') ? JSON.parse(localStorage.getItem('vue-todo')) : [];
             console.log('getItem', this.items);
+          },
+          archiveItems() {
+            this.items = this.items.filter(item => !item.checked);
+            this.saveToLocalStorage();
           },
         },
         mounted() {
